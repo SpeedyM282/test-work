@@ -1,10 +1,13 @@
 import { useState } from "react";
-import CreateProductModal from "../../components/CreateProductModal";
+import { Link } from "react-router-dom";
+import { categories } from "../../helper";
 import Product from "../../components/Product";
 import { Button, Stack, Typography } from "@mui/material";
+import CreateProductModal from "../../components/CreateProductModal";
 
 const Main = () => {
 	const [open, setOpen] = useState(false);
+
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
 
@@ -28,8 +31,26 @@ const Main = () => {
 					</Button>
 				</Stack>
 
-				<Stack border="1px solid red">
-					<Typography variant="h6">Categories</Typography>
+				<Stack direction="row" gap={3}>
+					{categories.map((e) => (
+						<Link key={e.text} to={`/?category=${e.text}`}>
+							<Typography
+								variant="body2"
+								sx={{
+									p: 1,
+									fontWeight: 500,
+									transition: "0.3s",
+									borderBottom: "1px solid transparent",
+									"&:hover": {
+										color: "#1976d2",
+										borderBottom: "1px solid #1976d2",
+									},
+								}}
+							>
+								{e.text}
+							</Typography>
+						</Link>
+					))}
 				</Stack>
 
 				<Stack
