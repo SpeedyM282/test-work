@@ -36,7 +36,6 @@ const Main = () => {
 	});
 
 	useEffect(() => {
-		console.log(category);
 		if (category) {
 			const products = JSON.parse(localStorage.getItem("products") || "[]");
 			setProducts(products.filter((e: IProduct) => e.category === category));
