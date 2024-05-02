@@ -1,17 +1,23 @@
-import { Breadcrumbs, Stack, Typography } from "@mui/material";
-import noImage from "../../assets/no_image.png";
-import { useEffect, useState } from "react";
 import { IProduct } from "../../types";
-import { Link, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import noImage from "../../assets/no_image.png";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { Breadcrumbs, Stack, Typography } from "@mui/material";
 
 const ProductPage = () => {
+	const navigate = useNavigate();
 	const { productId } = useParams();
 	const [product, setProduct] = useState<IProduct>();
 
 	useEffect(() => {
 		const products = JSON.parse(localStorage.getItem("products") || "[]");
+		const productById = products.find((e: IProduct) => e.id === productId);
 
-		setProduct(products.find((e: IProduct) => e.id === productId));
+		if (productById) {
+			setProduct(productById);
+		} else {
+			navigate("/main");
+		}
 	}, []);
 
 	return (
