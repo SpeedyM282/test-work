@@ -1,19 +1,16 @@
 import { useState } from "react";
+import { menuItemStyles } from "./styles";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Menu, Divider, MenuItem, IconButton, Tooltip } from "@mui/material";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 
-const menuItemStyles = {
-	py: 1,
-	px: 1.5,
-	fontSize: 14,
-	display: "flex",
-	alignItems: "center",
-	gap: 1,
-};
+interface IProps {
+	handleEditProduct: () => void;
+	handleDeleteProduct: () => void;
+}
 
-const CustomMenu = () => {
+const CustomMenu = ({ handleDeleteProduct, handleEditProduct }: IProps) => {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
 
@@ -80,7 +77,13 @@ const CustomMenu = () => {
 				transformOrigin={{ horizontal: "right", vertical: "top" }}
 				anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
 			>
-				<MenuItem sx={menuItemStyles} onClick={handleClose}>
+				<MenuItem
+					sx={menuItemStyles}
+					onClick={() => {
+						handleEditProduct();
+						handleClose();
+					}}
+				>
 					<EditOutlinedIcon sx={{ fontSize: 22 }} />
 					Edit
 				</MenuItem>
@@ -88,7 +91,10 @@ const CustomMenu = () => {
 				<Divider sx={{ margin: "0 !important" }} />
 
 				<MenuItem
-					onClick={handleClose}
+					onClick={() => {
+						handleDeleteProduct();
+						handleClose();
+					}}
 					sx={{ ...menuItemStyles, color: "#E11D48" }}
 				>
 					<DeleteOutlineRoundedIcon sx={{ fontSize: 22 }} />

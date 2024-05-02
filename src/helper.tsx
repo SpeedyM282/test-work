@@ -7,22 +7,26 @@ import BusinessCenterRoundedIcon from "@mui/icons-material/BusinessCenterRounded
 export const categories = [
 	{
 		icon: <HeadphonesRoundedIcon />,
-		text: "Elektronika",
+		text: "Electronics",
 	},
 	{
 		icon: <BlenderRoundedIcon />,
-		text: "Maishiy texnika",
+		text: "Appliances",
 	},
 	{
 		icon: <CheckroomRoundedIcon />,
-		text: "Kiyim",
+		text: "Clothes",
 	},
 	{
 		icon: <BusinessCenterRoundedIcon />,
-		text: "Aksessuarlar",
+		text: "Accessories",
 	},
 	{
 		icon: <FavoriteRoundedIcon />,
-		text: "Salomatlik",
+		text: "Health",
 	},
 ];
+
+export const uid = () => {
+	return Date.now().toString(36) + Math.random().toString(36).substr(2);
+};
