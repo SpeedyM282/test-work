@@ -1,11 +1,11 @@
 import * as yup from "yup";
-import { useState } from "react";
 import { IProduct } from "../../types";
-import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
 import { categories, uid } from "../../helper";
 import Product from "../../components/Product";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Link, useSearchParams } from "react-router-dom";
 import { Button, Stack, Typography } from "@mui/material";
 import CreateProductModal from "../../components/CreateProductModal";
 
@@ -26,14 +26,24 @@ const createProductSchema = yup.object().shape({
 });
 
 const Main = () => {
-	const [products, setProducts] = useState<IProduct[]>(
-		JSON.parse(localStorage.getItem("products") || "[]")
-	);
 	const [open, setOpen] = useState(false);
+	const [searchParams, _] = useSearchParams();
+	const [products, setProducts] = useState<IProduct[]>([]);
+	const category = searchParams.get("category") || "";
 
 	const useFormData = useForm<IProduct>({
 		resolver: yupResolver(createProductSchema),
 	});
+
+	useEffect(() => {
+		console.log(category);
+		if (category) {
+			const products = JSON.parse(localStorage.getItem("products") || "[]");
+			setProducts(products.filter((e: IProduct) => e.category === category));
+		} else {
+			setProducts(JSON.parse(localStorage.getItem("products") || "[]"));
+		}
+	}, [category]);
 
 	const addProduct = (data: IProduct) => {
 		const newProduct = {
@@ -97,26 +107,46 @@ const Main = () => {
 				</Stack>
 
 				<Stack direction="row" gap={3}>
-					{!!products.length &&
-						categories.map((e) => (
-							<Link key={e.text} to={`/?category=${e.text}`}>
-								<Typography
-									variant="body2"
-									sx={{
-										p: 1,
-										fontWeight: 500,
-										transition: "0.3s",
-										borderBottom: "1px solid transparent",
-										"&:hover": {
-											color: "#1976d2",
-											borderBottom: "1px solid #1976d2",
-										},
-									}}
-								>
-									{e.text}
-								</Typography>
-							</Link>
-						))}
+					<Link to="/main">
+						<Typography
+							variant="body2"
+							sx={{
+								p: 1,
+								fontWeight: 500,
+								transition: "0.3s",
+								borderBottom: "1px solid",
+								color: !category ? "#1976d2" : "#000",
+								borderColor: !category ? "#1976d2" : "transparent",
+								"&:hover": {
+									color: "#1976d2",
+									borderBottom: "1px solid #1976d2",
+								},
+							}}
+						>
+							All
+						</Typography>
+					</Link>
+					{categories.map((e) => (
+						<Link key={e.text} to={`/main?category=${e.text}`}>
+							<Typography
+								variant="body2"
+								sx={{
+									p: 1,
+									fontWeight: 500,
+									transition: "0.3s",
+									borderBottom: "1px solid",
+									color: category === e.text ? "#1976d2" : "#000",
+									borderColor: category === e.text ? "#1976d2" : "transparent",
+									"&:hover": {
+										color: "#1976d2",
+										borderBottom: "1px solid #1976d2",
+									},
+								}}
+							>
+								{e.text}
+							</Typography>
+						</Link>
+					))}
 				</Stack>
 
 				<Stack

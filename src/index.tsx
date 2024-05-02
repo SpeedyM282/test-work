@@ -1,11 +1,19 @@
 import "./index.css";
 import Main from "./pages/main";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+	Navigate,
+	RouterProvider,
+	createBrowserRouter,
+} from "react-router-dom";
 
 const router = createBrowserRouter([
 	{
 		path: "/",
+		element: <Navigate to="/main" />,
+	},
+	{
+		path: "/main",
 		element: <Main />,
 	},
 ]);
