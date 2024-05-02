@@ -73,9 +73,12 @@ const Main = () => {
 	};
 
 	const handleDeleteProduct = async (id: string) => {
-		await setProducts((prev) => prev.filter((e) => e.id !== id));
+		let products = JSON.parse(localStorage.getItem("products") || "[]");
+		products = products.filter((e: IProduct) => e.id !== id);
 
 		localStorage.setItem("products", JSON.stringify(products));
+
+		setProducts((prev) => prev.filter((e) => e.id !== id));
 	};
 
 	const isUpdate = !!useFormData?.getValues()?.id;
@@ -158,6 +161,7 @@ const Main = () => {
 					{!!products.length ? (
 						products.map((e) => (
 							<Product
+								id={e.id}
 								key={e.id}
 								price={e.price}
 								title={e.title}

@@ -1,8 +1,10 @@
 import CustomMenu from "./CustomMenu";
 import noImage from "../assets/no_image.png";
 import { Card, Stack, Typography, CardContent } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 interface IProps {
+	id?: string;
 	title: string;
 	price: number;
 	description: string;
@@ -11,12 +13,15 @@ interface IProps {
 }
 
 const Product = ({
+	id,
 	title,
 	price,
 	description,
 	handleEditProduct,
 	handleDeleteProduct,
 }: IProps) => {
+	const navigate = useNavigate();
+
 	return (
 		<Card
 			sx={{
@@ -24,11 +29,13 @@ const Product = ({
 				height: 365,
 				borderRadius: 3,
 				boxShadow: "none",
+				cursor: "pointer",
 				transition: "0.3s",
 				"&:hover": {
 					boxShadow: "rgba(0, 0, 0, 0.15) 0px 5px 15px 0px",
 				},
 			}}
+			onClick={() => navigate(`/products/${id}`)}
 		>
 			<Stack
 				sx={{
@@ -41,8 +48,8 @@ const Product = ({
 				}}
 			>
 				<CustomMenu
-					handleDeleteProduct={handleDeleteProduct}
 					handleEditProduct={handleEditProduct}
+					handleDeleteProduct={handleDeleteProduct}
 				/>
 			</Stack>
 

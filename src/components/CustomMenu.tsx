@@ -15,10 +15,12 @@ const CustomMenu = ({ handleDeleteProduct, handleEditProduct }: IProps) => {
 	const open = Boolean(anchorEl);
 
 	const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+		event.stopPropagation();
 		setAnchorEl(event.currentTarget);
 	};
 
-	const handleClose = () => {
+	const handleClose = (event: any) => {
+		event.stopPropagation();
 		setAnchorEl(null);
 	};
 
@@ -79,9 +81,9 @@ const CustomMenu = ({ handleDeleteProduct, handleEditProduct }: IProps) => {
 			>
 				<MenuItem
 					sx={menuItemStyles}
-					onClick={() => {
+					onClick={(event) => {
 						handleEditProduct();
-						handleClose();
+						handleClose(event);
 					}}
 				>
 					<EditOutlinedIcon sx={{ fontSize: 22 }} />
@@ -91,9 +93,9 @@ const CustomMenu = ({ handleDeleteProduct, handleEditProduct }: IProps) => {
 				<Divider sx={{ margin: "0 !important" }} />
 
 				<MenuItem
-					onClick={() => {
+					onClick={(event) => {
 						handleDeleteProduct();
-						handleClose();
+						handleClose(event);
 					}}
 					sx={{ ...menuItemStyles, color: "#E11D48" }}
 				>

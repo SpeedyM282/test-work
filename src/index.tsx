@@ -1,6 +1,7 @@
 import "./index.css";
 import Main from "./pages/main";
 import ReactDOM from "react-dom/client";
+import ProductPage from "./pages/product";
 import {
 	Navigate,
 	RouterProvider,
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
 	{
 		path: "/main",
 		element: <Main />,
+	},
+	{
+		path: "/products/:productId",
+		element: <ProductPage />,
 	},
 ]);
 
